@@ -28,29 +28,29 @@ How to use it?
 
 List files in `sites-available` directory:
 
-    nginx list
+    nxhosts list
 
 Test nginx configuration:
 
-    nginx test
+    nxhosts test
 
 Enable or disable specific server(s):
 
-    nginx enable server [server ...]
+    nxhosts enable server [server ...]
 
 or
 
-    nginx disable server [server ...]
+    nxhosts disable server [server ...]
 
 View one or more nginx server files (files in `sites-available`
 directory):
 
-    nginx view server [server ...]
+    nxhosts view server [server ...]
 
 Edit one or more nginx server files (files in `sites-available`
 directory):
 
-    nginx edit server [server ...]
+    nxhosts edit server [server ...]
 
 
 How to install it?
