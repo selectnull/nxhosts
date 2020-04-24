@@ -5,6 +5,7 @@ subcommand=$1
 # let's locate nginx configuration directory
 nginx_basedir=$(dirname $(nginx -V 2>&1 | grep -o '\-\-conf-path=\(.*conf\)' | cut -d '=' -f2))
 sites_available="$nginx_basedir/sites-available"
+sites_enabled="$nginx_basedir/sites-enabled"
 
 # read editor from environment or use vim as default
 editor="${EDITOR:-vim}"
@@ -23,8 +24,17 @@ case "$subcommand" in
         nginx -t
         ;;
     enable|disable)
-        echo TODO
-        return 1
+        shift
+        for f in "$@"; do
+            case "$subcommand" in
+                enable)
+                    ln -s "$sites_available/$f" "$sites_enabled/$f"
+                    ;;
+                disable)
+                    rm "$sites_enabled/$f"
+                    ;;
+            esac
+        done
         ;;
     edit|view)
         shift
