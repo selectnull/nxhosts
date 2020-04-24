@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+subcommand=$1
+
+# let's locate nginx configuration directory
+nginx_basedir=$(dirname $(nginx -V 2>&1 | grep -o '\-\-conf-path=\(.*conf\)' | cut -d '=' -f2))
+sites_available="$nginx_basedir/sites-available"
+
+# read editor from environment or use vim as default
+editor="${EDITOR:-vim}"
+
+
+usage() {
+    echo "nxhosts subcommand [server ...]"
+    echo
+}
+
+case "$subcommand" in
+    list)
+        ls -1 /etc/nginx/sites-available
+        ;;
+    test)
+        nginx -t
+        ;;
+    enable|disable)
+        echo TODO
+        return 1
+        ;;
+    edit|view)
+        shift
+        files=()
+        for f in "$@"; do
+            files=( "${files[@]}" "$sites_available/$f" )
+        done
+        case "$subcommand" in
+            edit)
+                dothis=$editor
+                ;;
+            view)
+                dothis=less
+                ;;
+        esac
+        $dothis $(printf " %s" "${files[@]}")
+        ;;
+    --help|-h)
+        usage
+        ;;
+    *)
+        exit 1
+esac
