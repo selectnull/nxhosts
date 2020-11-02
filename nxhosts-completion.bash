@@ -8,10 +8,10 @@ _complete_nxhosts() {
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     subcommand="${COMP_WORDS[1]}"
-    opts="list test enable disable view edit"
+    opts="list test reload enable disable view edit"
 
     case "${subcommand}" in
-        list|test)
+        list|test|reload)
             return 0
             ;;
         enable|disable|view|edit)

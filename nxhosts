@@ -23,6 +23,9 @@ case "$subcommand" in
     test)
         nginx -t
         ;;
+    reload)
+        nginx -s reload
+        ;;
     enable|disable)
         shift
         for f in "$@"; do
